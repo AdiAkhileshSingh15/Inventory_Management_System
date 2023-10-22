@@ -8,13 +8,32 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.PastOrPresent;
 
-public record Transaction(
-        @Id Long transactionId,
-        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @PastOrPresent LocalDateTime tdate,
-        Customer customer,
-        User user,
-        TransactionType type,
-        List<TransactionDetails> td) {
+import lombok.Data;
+
+@Data
+public class Transaction {
+    @Id
+    private long transactionId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @PastOrPresent
+    private LocalDateTime tdate;
+
+    private Customer customer;
+
+    private User user;
+    private TransactionType type;
+
+    private List<TransactionDetails> td;
+
+    public Transaction(LocalDateTime tdate, Customer customer, User user, TransactionType type,
+            List<TransactionDetails> td) {
+        this.tdate = tdate;
+        this.customer = customer;
+        this.user = user;
+        this.type = type;
+        this.td = td;
+    }
+
     @Override
     public String toString() {
         return "Transaction [transactionId=" + transactionId + ", tdate=" + tdate + ", customer=" + customer + ", user="
