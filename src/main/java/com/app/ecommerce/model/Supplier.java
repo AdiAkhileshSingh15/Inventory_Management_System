@@ -1,11 +1,13 @@
 package com.app.ecommerce.model;
 
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import jakarta.validation.constraints.NotEmpty;
 
 import lombok.Data;
 
+@NoArgsConstructor
 @Data
 public class Supplier {
     @Id

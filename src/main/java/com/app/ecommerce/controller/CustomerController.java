@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/customer")
+@RequestMapping("/Customer")
 public class CustomerController {
     private final CustomerDAO customerDAO;
 
