@@ -1,5 +1,6 @@
 package com.app.ecommerce.model;
 
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import jakarta.validation.constraints.Email;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
+@NoArgsConstructor
 public class Customer {
     @Id
     private Long customerID;

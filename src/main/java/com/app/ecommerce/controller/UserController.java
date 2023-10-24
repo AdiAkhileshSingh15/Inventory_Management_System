@@ -71,7 +71,7 @@ public class UserController {
     }
 
     @PostMapping("/user/save")
-    public String save(@Valid User user, BindingResult bindingResult, Model model) {
+    public String save(@Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "newemp";
         }
@@ -115,7 +115,7 @@ public class UserController {
     }
 
     @GetMapping("/user/delete/{userID}")
-    public String delete(Model model, @PathVariable("userID") long id) {
+    public String delete(@PathVariable("userID") long id) {
         userDAO.deleteById(id);
         return "forward:/user/list/1";
     }

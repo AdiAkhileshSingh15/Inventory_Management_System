@@ -1,4 +1,4 @@
--- DROP DATABASE ecomm;
+DROP DATABASE ecomm;
 CREATE DATABASE IF NOT EXISTS ecomm;
 USE ecomm;
 CREATE TABLE IF NOT EXISTS user (
@@ -74,3 +74,10 @@ CREATE TABLE IF NOT EXISTS transaction_details (
     FOREIGN KEY (transaction) REFERENCES transaction(transaction_id),
     FOREIGN KEY (product) REFERENCES product(product_id)
 );
+
+INSERT INTO user
+(user_name, password, name, email, phone, `role`)
+VALUES('adisingh', 'adi@1234', 'adi singh', 'adisingh@gmail.com', 9305717073, 'USER');
+INSERT INTO user
+(user_name, password, name, email, phone, `role`)
+VALUES('eddyxing', 'eddy@123', 'eddy xing', 'eddyxing@gmail.com', 9305717074, 'USER');
