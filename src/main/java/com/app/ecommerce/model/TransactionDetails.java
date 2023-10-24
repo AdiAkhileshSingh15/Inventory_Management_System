@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class TransactionDetails {
-
     @Id
     private long Trans_Detail_Id;
 
@@ -24,7 +23,6 @@ public class TransactionDetails {
 
     @Override
     public String toString() {
-        return "TransactionDetails [Trans_Detail_Id=" + Trans_Detail_Id + ", product="
-                + product + ", quantity=" + quantity + "]";
+        return "TransactionDetails [Trans_Detail_Id=" + Trans_Detail_Id + ", product=" + product + ", quantity=" + quantity + "]";
     }
 }

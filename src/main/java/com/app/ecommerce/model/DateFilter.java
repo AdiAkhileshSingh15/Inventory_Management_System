@@ -8,9 +8,9 @@ import lombok.Data;
 
 @Data
 public class DateFilter {
-        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-        private LocalDateTime startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime startDate;
 
-        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-        private LocalDateTime endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime endDate;
 }

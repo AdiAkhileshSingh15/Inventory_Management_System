@@ -12,6 +12,10 @@ import lombok.Data;
 
 @Data
 public class Transaction {
+    public enum TransactionType {
+        RMA, PO, USAGE
+    }
+
     @Id
     private long transactionId;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
@@ -25,8 +29,7 @@ public class Transaction {
 
     private List<TransactionDetails> td;
 
-    public Transaction(LocalDateTime tdate, Customer customer, User user, TransactionType type,
-            List<TransactionDetails> td) {
+    public Transaction(LocalDateTime tdate, Customer customer, User user, TransactionType type, List<TransactionDetails> td) {
         this.tdate = tdate;
         this.customer = customer;
         this.user = user;
@@ -36,7 +39,6 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction [transactionId=" + transactionId + ", tdate=" + tdate + ", customer=" + customer + ", user="
-                + user + ", type=" + type + "]";
+        return "Transaction [transactionId=" + transactionId + ", tdate=" + tdate + ", customer=" + customer + ", user=" + user + ", type=" + type + "]";
     }
 }

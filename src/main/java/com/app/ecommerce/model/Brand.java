@@ -6,11 +6,11 @@ import lombok.Data;
 
 @Data
 public class Brand {
-        @Id
-        private Long brandId;
-        private String brandName;
+    @Id
+    private Long brandId;
+    private String brandName;
 
-        public Brand(String brandName) {
-                this.brandName = brandName;
-        }
+    public Brand(String brandName) {
+        this.brandName = brandName;
+    }
 }
