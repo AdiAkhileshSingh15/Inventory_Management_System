@@ -53,7 +53,7 @@ public class SupplierController {
         return "forward:/Supplier/supplierlist/1";
     }
 
-    @RequestMapping(value = "/supplierlist/{pageNum}", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/supplierlist/{pageNum}", method = { RequestMethod.GET, RequestMethod.POST })
     public String viewSupplierList(Model model, @PathVariable(name = "pageNum") int pageNum) {
         Page<Supplier> supplierPage = supplierDAO.findAll(PageRequest.of(pageNum - 1, 5));
         List<Supplier> supplierSlice = supplierPage.getContent();
