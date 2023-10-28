@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/Supplier")
-public class SupplierController {
+public class SupplierController extends ExceptionHandlingController {
     private final SupplierDAO supplierDAO;
 
     public SupplierController(SupplierDAO supplierDAO) {

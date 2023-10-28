@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/transaction")
-public class TransactionController {
+public class TransactionController extends ExceptionHandlingController {
     private final UserDAO userDAO;
 
     private final ProductDAO productDAO;

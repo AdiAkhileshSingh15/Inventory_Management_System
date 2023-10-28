@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/Customer")
-public class CustomerController {
+public class CustomerController extends ExceptionHandlingController {
     private final CustomerDAO customerDAO;
 
     public CustomerController(CustomerDAO customerDAO) {
@@ -51,7 +51,7 @@ public class CustomerController {
         return "forward:/Customer/customerlist/1";
     }
 
-    @RequestMapping(value = "/customerlist/{pageNum}", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/customerlist/{pageNum}", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewCustomerList(Model model, @PathVariable(name = "pageNum") int pageNum) {
         Page<Customer> custPage = customerDAO.findAll(PageRequest.of(pageNum - 1, 5));
         List<Customer> custSlice = custPage.getContent();

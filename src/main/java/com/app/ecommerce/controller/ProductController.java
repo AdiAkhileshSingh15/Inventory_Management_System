@@ -26,7 +26,7 @@ import java.util.Objects;
 @RestController
 @CrossOrigin
 @RequestMapping("/Product")
-public class ProductController {
+public class ProductController extends ExceptionHandlingController {
     private final ProductDAO productDAO;
 
     private final TransactionDAO transactionDAO;

@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 @RestController
 @CrossOrigin
-public class UserController {
+public class UserController extends ExceptionHandlingController {
     Logger logger = LogManager.getLogManager().getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private final UserDAO userDAO;
