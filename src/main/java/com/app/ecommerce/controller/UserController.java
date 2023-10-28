@@ -52,14 +52,12 @@ public class UserController {
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest session, HttpServletRequest request, HttpServletResponse response) {
-        String idString;
         String transactionValue = Arrays.stream(request.getCookies()).filter(c -> "transaction".equals(c.getName()))
                 .map(Cookie::getValue).reduce((first, second) -> second).orElse(null);
-        idString = Objects.requireNonNullElse(transactionValue, "no cookie");
+        String idString = Objects.requireNonNullElse(transactionValue, "no cookie");
         if (!idString.equals("no cookie")) {
             Long id = Long.parseLong(idString);
-            List<TransactionDetails> transactions = transactionDetailDAO
-                    .findByTransaction(transactionDAO.findById(id).get());
+            List<TransactionDetails> transactions = transactionDetailDAO.findByTransaction(id);
             transactionDetailDAO.deleteAll(transactions);
             transactionDAO.deleteById(id);
 
@@ -118,7 +116,7 @@ public class UserController {
         return "forward:/user/list/1";
     }
 
-    @RequestMapping(value = "/user/list/{pageNum}", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/user/list/{pageNum}", method = {RequestMethod.GET, RequestMethod.POST})
     public String list(Model model, @PathVariable(name = "pageNum") int pageNum) {
         Page<User> userPage = userDAO.findAll(PageRequest.of(pageNum - 1, 5));
         List<User> userSlice = userPage.getContent();

@@ -1,8 +1,8 @@
 package com.app.ecommerce.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,6 +11,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
 
 @Data
+@NoArgsConstructor
 public class Transaction {
     public enum TransactionType {
         RMA, PO, USAGE
@@ -22,23 +23,22 @@ public class Transaction {
     @PastOrPresent
     private LocalDateTime tdate;
 
-    private Customer customer;
-
-    private User user;
     private TransactionType type;
 
-    private List<TransactionDetails> td;
+    private Long user;
 
-    public Transaction(LocalDateTime tdate, Customer customer, User user, TransactionType type, List<TransactionDetails> td) {
+    private Long customer;
+
+    public Transaction(LocalDateTime tdate, TransactionType type, Long user, Long customer) {
         this.tdate = tdate;
-        this.customer = customer;
-        this.user = user;
         this.type = type;
-        this.td = td;
+        this.user = user;
+        this.customer = customer;
     }
 
     @Override
     public String toString() {
-        return "Transaction [transactionId=" + transactionId + ", tdate=" + tdate + ", customer=" + customer + ", user=" + user + ", type=" + type + "]";
+        return "Transaction [transactionId=" + transactionId + ", tdate=" + tdate + ", type=" + type + ", user=" + user
+                + "]";
     }
 }

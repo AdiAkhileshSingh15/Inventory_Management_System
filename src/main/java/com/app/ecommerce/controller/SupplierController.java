@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("Supplier")
+@RequestMapping("/Supplier")
 public class SupplierController {
     private final SupplierDAO supplierDAO;
 
@@ -47,13 +47,12 @@ public class SupplierController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
-
         supplierDAO.deleteById(id);
 
         return "forward:/Supplier/supplierlist/1";
     }
 
-    @RequestMapping(value = "/supplierlist/{pageNum}", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/supplierlist/{pageNum}", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewSupplierList(Model model, @PathVariable(name = "pageNum") int pageNum) {
         Page<Supplier> supplierPage = supplierDAO.findAll(PageRequest.of(pageNum - 1, 5));
         List<Supplier> supplierSlice = supplierPage.getContent();

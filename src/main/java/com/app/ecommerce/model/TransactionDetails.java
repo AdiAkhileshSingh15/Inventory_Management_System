@@ -1,24 +1,23 @@
 package com.app.ecommerce.model;
 
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import lombok.Data;
-import org.springframework.data.relational.core.mapping.Embedded;
 
+@NoArgsConstructor
 @Data
 public class TransactionDetails {
     @Id
-    private long Trans_Detail_Id;
+    private long transDetailId;
 
-    @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
-    private Transaction transaction;
+    private Long transaction;
 
-    @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
-    private Product product;
+    private Long product;
 
     private int quantity;
 
-    public TransactionDetails(Transaction transaction, Product product, int quantity) {
+    public TransactionDetails(Long transaction, Long product, int quantity) {
         this.transaction = transaction;
         this.product = product;
         this.quantity = quantity;
@@ -26,6 +25,6 @@ public class TransactionDetails {
 
     @Override
     public String toString() {
-        return "TransactionDetails [Trans_Detail_Id=" + Trans_Detail_Id + ", product=" + product + ", quantity=" + quantity + "]";
+        return "TransactionDetails [Trans_Detail_Id=" + transDetailId + ", product=" + product + ", quantity=" + quantity + "]";
     }
 }
