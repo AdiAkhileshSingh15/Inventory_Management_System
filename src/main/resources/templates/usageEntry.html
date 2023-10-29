@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutstyle2.css"
+	th:href="@{/css/layoutstyle2.css}" />
+<title>Inventory Management System</title>
+</head>
+<body>
+	<header th:insert="layout/layout2.html::header"></header>
+	<div th:insert="layout/layout2.html::menu"></div>
+	<div class="main">
+	<h3>
+		Usage Entry Form
+	</h3>
+	<hr>
+	<form action="" th:object="${transaction}"
+		th:action="@{/stockentry/save}" method="post">
+		<div class="form-group">
+			<fieldset>
+				<input type="hidden" th:field="*{transactionId}">
+			</fieldset>
+			<fieldset>
+				Transaction Type: <select id="transactType" name="type"
+					th:field="*{type}" class="form-control">
+					<option
+						th:value="${T(sg.edu.iss.CA.model.TransactionType).USAGE}" th:text="${T(sg.edu.iss.CA.model.TransactionType).USAGE}"></option>
+				</select>
+			</fieldset>
+			<fieldset>
+				Date: <input type="datetime-local" th:field="*{tdate}" th:value="*{tdate}"
+					class="form-control">
+					<p th:if="${#fields.hasErrors('tdate')}" th:errors="*{tdate}"></p>
+			</fieldset>
+			<fieldset>
+				User: <input type="text" th:field="*{user}" th:value="*{user}"
+					class="form-control" readonly>
+					<p th:if ="${#fields.hasErrors('user')}" th:errors="*{user}">
+			</fieldset>
+			<fieldset>
+				Vehicle Number: <select id="dropVehicle" name="vehicle"
+					th:field="${transaction.customer.customerID}" class="form-control">
+					<option value="0">select vehicle</option>
+					<option th:each="transaction : ${customers}" th:value="${transaction.customerID}" th:text="${transaction.vehicle}"></option>
+				</select>
+			</fieldset>
+			<fieldset>
+				<button type="submit" class="btn btn-success" style="float:right">Save</button>
+				<a href="javascript:history.back()" class="btn btn-default">Go Back</a>
+			</fieldset>
+		</div>
+	</form>
+	<br>
+	<br>
+	</div>
+	<footer th:insert="layout/layout2.html::footer"></footer>
+</body>
+</html>

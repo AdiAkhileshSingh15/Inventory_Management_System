@@ -40,8 +40,8 @@ public class ProductController extends ExceptionHandlingController {
     private final InventoryDAO inventoryDAO;
 
     public ProductController(ProductDAO productDAO, TransactionDAO transactionDAO,
-                             TransactionDetailDAO transactionDetailDAO, BrandDAO brandDAO, SupplierDAO supplierDAO,
-                             InventoryDAO inventoryDAO) {
+            TransactionDetailDAO transactionDetailDAO, BrandDAO brandDAO, SupplierDAO supplierDAO,
+            InventoryDAO inventoryDAO) {
         this.productDAO = productDAO;
         this.transactionDAO = transactionDAO;
         this.brandDAO = brandDAO;
@@ -50,7 +50,7 @@ public class ProductController extends ExceptionHandlingController {
         this.inventoryDAO = inventoryDAO;
     }
 
-    @RequestMapping(value = "/list/{pageNum}", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/list/{pageNum}", method = { RequestMethod.GET, RequestMethod.POST })
     public String list(Model model, @PathVariable(name = "pageNum") int pageNum, HttpServletRequest request) {
         Integer pageSize = 10;
         Product product = new Product();
@@ -87,9 +87,9 @@ public class ProductController extends ExceptionHandlingController {
         return "productlist";
     }
 
-    @RequestMapping(value = "/filterlist/{pageNum}", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/filterlist/{pageNum}", method = { RequestMethod.GET, RequestMethod.POST })
     public String filterList(@ModelAttribute("product") Product product,
-                             Model model, @PathVariable(name = "pageNum") int pageNum, HttpServletRequest request) {
+            Model model, @PathVariable(name = "pageNum") int pageNum, HttpServletRequest request) {
         Integer pageSize = 10;
         if (product.getProductName() == null || product.getProductName().isEmpty()) {
             product.setProductName(null);
@@ -166,12 +166,12 @@ public class ProductController extends ExceptionHandlingController {
         model.addAttribute("products", product);
         model.addAttribute("transactiontype", transaction.getType());
 
-        return "detailsentry";
+        return "detailsEntry";
     }
 
     @GetMapping("/viewHistory/{pid}/{pageNum}")
     public String viewHistory(@PathVariable("pid") Long prodId, Model model,
-                              @PathVariable(name = "pageNum") int pageNum) {
+            @PathVariable(name = "pageNum") int pageNum) {
         DateFilter df = new DateFilter();
         Product product = productDAO.findById(prodId).get();
 
@@ -188,7 +188,7 @@ public class ProductController extends ExceptionHandlingController {
 
     @GetMapping("/filterHistory/{pid}/{pageNum}")
     public String filterHistory(@ModelAttribute("df") DateFilter df, @PathVariable("pid") Long prodId, Model model,
-                                @PathVariable(name = "pageNum") int pageNum) {
+            @PathVariable(name = "pageNum") int pageNum) {
         Product product = productDAO.findById(prodId).get();
 
         List<TransactionDetails> history = transactionDetailDAO.filterProductHistory(product.getProductId(),

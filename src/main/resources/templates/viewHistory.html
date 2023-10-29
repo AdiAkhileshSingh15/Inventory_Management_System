@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutstyle2.css"
+	th:href="@{/css/layoutstyle2.css}" />
+<title>Inventory Management System</title>
+</head>
+<body>
+	<header th:insert="layout/layout2.html :: header"></header>
+	<div th:replace="layout/layout2.html :: menu"></div>
+	<div class="main">
+		<h3>Transaction Details:</h3>
+		<hr>
+		<form action="" th:object="${df}"
+			th:action="@{'/Product/filterHistory/'+${product.productId}+'/1'}"
+			method="GET" class="form-inline">
+
+			<fieldset>
+				Start Date: <input type="datetime-local" th:field="*{startDate}"
+					class="form-control" style="width: 40%"> End Date: <input
+					type="datetime-local" th:field="*{endDate}" class="form-control"
+					style="width: 40%">
+				<button type="submit" class="btn btn-default" style="float: right;">Filter</button>
+			</fieldset>
+
+			<br>
+			<table class="table table-striped" align="center">
+				<tr>
+					<th>No.</th>
+					<th>Transaction ID</th>
+					<th>Date Time</th>
+					<th>User Name</th>
+					<th>Product ID</th>
+					<th>Product Name</th>
+					<th>Transaction Type</th>
+					<th>Quantity</th>
+				</tr>
+				<tr th:each="detail:${history}">
+					<td th:text="${detail.Trans_Detail_Id}">Transaction Detail ID</td>
+					<td th:text="${detail.transaction.transactionId}">Transaction
+						ID</td>
+					<td
+						th:text="${#temporals.format(detail.transaction.tdate, 'dd-MM-yyyy HH:mm')}">Transaction
+						Date</td>
+					<td th:text="${detail.transaction.user.userName}">User Name</td>
+					<td th:text="${detail.product.productId}">Product ID</td>
+					<td th:text="${detail.product.productName}">Product Name</td>
+					<td th:text="${detail.transaction.type}">Transaction Type</td>
+					<td th:text="${detail.quantity}">Quantity</td>
+				</tr>
+			</table>
+			<br> <br> <a href="javascript:history.back()"
+				class="btn btn-default">Go Back</a> <br>
+			<br>
+			<div th:if="${totalPages>1}">
+				<button th:if="${currentPage > 1}" type="submit"
+					th:formaction="@{'/Product/'+${hSource}+'/'+${product.productId}+'/1'}">First</button>
+				<span th:unless="${currentPage > 1}">First</span>
+				<button th:if="${currentPage > 1}" type="submit"
+					th:formaction="@{'/Product/'+${hSource}+'/'+${product.productId}+'/' + ${currentPage-1}}">Previous</button>
+				<span th:unless="${currentPage > 1}">Previous</span> <span
+					th:each="i: ${#numbers.sequence(1, totalPages)}">
+					<button th:if="${currentPage != i}" type="submit"
+						th:formaction="@{'/Product/'+${hSource}+'/'+${product.productId}+'/' + ${i}}"
+						th:utext="${i}">Page</button> <span
+					th:unless="${currentPage != i}" th:utext="${i}">Page</span> &nbsp;
+				</span>
+				<button th:if="${currentPage < totalPages}" type="submit"
+					th:formaction="@{'/Product/'+${hSource}+'/'+${product.productId}+'/' + ${currentPage+1}}">Next</button>
+				<span th:unless="${currentPage < totalPages}">Next</span>
+				<button th:if="${currentPage < totalPages}" type="submit"
+					th:formaction="@{'/Product/'+${hSource}+'/'+${product.productId}+'/' + ${totalPages}}">Last</button>
+				<span th:unless="${currentPage < totalPages}">Last</span>
+			</div>
+		</form>
+		<br> <br>
+	</div>
+	<footer th:insert="layout/layout2.html :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutstyle2.css"
+	th:href="@{/css/layoutstyle2.css}" />
+<title>Inventory Management System</title>
+</head>
+<body>
+	<header th:insert="layout/layout2.html::header"></header>
+	<div th:replace="layout/layout2.html::menu"></div>
+	<div class="main">
+	<h3>New Employee</h3>
+	<hr>
+	<form action="" th:object=${user} th:action="@{/user/save}"
+		method="post">
+		<div class="form-group">
+			<input type="hidden" th:field="*{userID}">
+			<fieldset>
+				Name<input type="text" th:field="*{name}" class="form-control">
+				<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+			</fieldset>
+			<fieldset>
+				User<input type="text" th:field="*{userName}" class="form-control">
+				<p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></p>
+			</fieldset>
+			<fieldset>
+				Email<input type="text" th:field="*{email}" class="form-control">
+				<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+			</fieldset>
+			<fieldset>
+				Password<input type="text" th:field="*{password}"
+					class="form-control">
+				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+			</fieldset>
+			<fieldset>
+				Contact<input type="text" th:field="*{contactno}"
+					class="form-control">
+				<p th:if="${#fields.hasErrors('contactno')}"
+					th:errors="*{contactno}"></p>
+			</fieldset>
+			<fieldset>
+				<b>Department</b> <br> <input type="radio" id="MECHANIC"
+					th:field="*{role}"
+					th:value="${T(sg.edu.iss.CA.model.Role).MECHANIC}"><label
+					for="MECHANIC">Mechanic</label><br> <br> <input
+					type="radio" id="ADMIN" th:field="*{role}"
+					th:value="${T(sg.edu.iss.CA.model.Role).ADMIN}"><label
+					for="ADMIN">Admin</label> <br>
+			</fieldset>
+			<button type="submit" class="btn btn-success" style="float: right;">Save</button>
+			<a href="javascript:history.back()" class="btn btn-default">Go
+				Back</a>
+		</div>
+	</form>
+	<br>
+	<br>
+	</div>
+	<footer th:insert="layout/layout.html::footer"></footer>
+</body>
+</html>

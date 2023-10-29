@@ -42,7 +42,7 @@ public class UserController extends ExceptionHandlingController {
         this.transactionDetailDAO = transactionDetailDAO;
     }
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public String login(Model model) {
         User user = new User();
         model.addAttribute("user", user);

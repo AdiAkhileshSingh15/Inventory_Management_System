@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+            rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../static/css/layoutstyle2.css"
+          th:href="@{/css/layoutstyle2.css}"/>
+    <title>Inventory Management System</title>
+</head>
+<body>
+<header th:insert="layout/layout2.html::header"></header>
+<div th:replace="layout/layout2.html::menu"></div>
+
+<div class="main">
+    <h2>GEARUP GARAGE</h2>
+    <hr>
+    <h4>
+        <i>You Hit It, We Fix It!</i>
+    </h4>
+
+    <br>
+    <br>
+    <table align="center" class="landing-table">
+        <tr>
+
+            <td class="landing-table-cell">
+                <figure>
+                    <a href="#" th:href="@{/Product/list/1}"><img
+                            src="../static/images/product.JPG" width="150" height="150" alt=""/>
+                        <figcaption>Product</figcaption>
+                    </a>
+                </figure>
+            </td>
+            <td class="landing-table-cell">
+                <figure>
+                    <a href="#" th:href="@{/stockentry/}"><img
+                            src="../static/images/transactions.JPG" width="150" height="150" alt=""/>
+                        <figcaption>Transactions</figcaption>
+                    </a>
+                </figure>
+            </td>
+            <td class="landing-table-cell">
+                <figure>
+                    <a href="#" th:href="@{/Customer/customerlist/1}"><img
+                            src="../static/images/Capture.JPG" width="150" height="150" alt=""/>
+                        <figcaption>Customers</figcaption>
+                    </a>
+                </figure>
+            </td>
+        </tr>
+        <tr>
+            <td th:if="${session.usession.role.toString().equals('ADMIN')}"
+                class="landing-table-cell">
+                <figure>
+                    <a href="#" th:href="@{/Supplier/supplierlist/1}"><img
+                            src="../static/images/supplier.JPG" width="150" height="150" alt=""/>
+                        <figcaption>Supplier</figcaption>
+                    </a>
+                </figure>
+            </td>
+            <td th:if="${session.usession.role.toString().equals('ADMIN')}"
+                class="landing-table-cell">
+                <figure>
+                    <a href="#" th:href="@{/user/list/1}"><img
+                            src="../static/images/employee.JPG" width="150" height="150" alt=""/>
+                        <figcaption>Employee</figcaption>
+                    </a>
+                </figure>
+            </td>
+        </tr>
+
+    </table>
+    <br> <br>
+</div>
+<footer th:insert="layout/layout2.html::footer"></footer>
+
+</body>
+</html>

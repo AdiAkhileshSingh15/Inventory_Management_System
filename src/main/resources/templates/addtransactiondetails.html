@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutstyle2.css"
+	th:href="@{/css/layoutstyle2.css}" />
+<title>Inventory Management System</title>
+</head>
+<body>
+	<header th:insert="layout/layout2.html::header"></header>
+	<div th:insert="layout/layout2.html::menu"></div>
+	<div class="main">
+	<h3>
+		Stock Transaction Details: 
+	</h3>
+	<hr>
+	<p th:if="${customer} != null" th:utext="'CustomerID: ' + ${customer}"></p>
+	<table class="table table-striped" align="center">
+		<tr>
+			<th>Transaction Detail ID</th>
+			<th>Transaction ID</th>
+			<th>Product ID</th>
+			<th>Product Name</th>
+			<th>Quantity</th>
+			<th>Edit Detail</th>
+			<th>Delete Detail</th>
+		</tr>
+		<tr th:each="detail:${td}">
+			<td th:text="${detail.Trans_Detail_Id}">Transaction Detail ID</td>
+			<td th:text="${detail.transaction.transactionId}">Transaction ID</td>
+			<td th:text="${detail.product.productId}">Product ID</td>
+			<td th:text="${detail.product.productName}">Product Name</td>
+			<td th:text="${detail.quantity}">Quantity</td>
+			<td><a href="" th:href="@{/stockentry/edittransactiondetails/}+${detail.Trans_Detail_Id}" th:utext="#{transaction.page.edit}">Edit</a></td>
+			<td><a href="" th:href="@{/stockentry/deletetransactiondetails/}+${detail.Trans_Detail_Id}" th:utext="#{transaction.page.delete}" th:onclick="return confirm('Are you sure that you want to delete this record?')">Delete</a></td>
+		</tr>
+	</table>
+	<br>
+	<a th:href="@{/stockentry/addtransactiondetails}" class="btn btn-default">Add</a>
+	<a th:href="@{/stockentry/transactiondetailconfirm}" class="btn btn-default">Save</a>
+	<a th:href="@{/stockentry/transactiondetailcancel}" class="btn btn-default">Cancel</a>
+	<br>
+	<br>
+	</div>
+	<footer th:insert="layout/layout2.html::footer"></footer>
+</body>
+</html>

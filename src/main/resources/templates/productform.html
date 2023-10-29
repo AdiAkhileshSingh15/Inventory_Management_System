@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutstyle2.css"
+	th:href="@{/css/layoutstyle2.css}" />
+<title>Inventory Management System</title>
+	<style>td{padding:5px;}</style>
+</head>
+<body>
+	<header th:insert="layout/layout2.html :: header"></header>
+	<div th:replace="layout/layout2.html :: menu"></div>
+	<div class="main">
+	<h3>Product Form</h3>
+	<hr>
+	<form action="" th:object="${product}" th:action="@{/Product/save}"
+		method="POST" >
+		<table align="center">
+	
+		<tr>
+			<td><input type="hidden" th:field="*{productId}" class="form-control"/></td>
+			<td>
+			<input type="hidden" th:field="*{inventory.inventoryId}">
+			<input type="hidden" th:field="*{inventory.lastEmailSent}">
+			<input type="hidden" th:field="*{inventory.reorderFlag}">
+			</td>
+		</tr>
+		<tr>
+			<td>Product Name:</td><td><input type="text" th:field="*{productName}" class="form-control">
+			<p th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"></td><td></td> <td>Supplier:</td><td><select name ="suppliers" th:field="*{supplier.supplierId}" class="form-control">
+				<option th:each="i : ${suppliers}" th:value="${i.supplierId}" th:text="${i.supplierId + ' ' + i.name}"></option>
+			</select></td> 
+		</tr>
+		<tr>
+			<td>Description:</td><td><textarea th:field="*{description}" class="form-control" placeholder="Please enter detailed description of product" rows="4"></textarea>
+			<p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p></td><td></td><td>Brand:</td>
+			<td><input type ="text" th:field="*{brand.brandName}" class="form-control">
+			</input></td> 
+		</tr>
+		<tr> 
+			<td>Color:</td><td><input type="text" th:field="*{colour}" class="form-control"></td><td></td><td>Stock:</td>
+			<td th:if="*{productId == null}"><input type="number" th:field="*{inventory.units}" class="form-control"><p th:if="${#fields.hasErrors('inventory.units')}" th:errors="*{inventory.units}"></p></td> 
+			<td th:unless="*{productId == null}"><input type="number" th:field="*{inventory.units}" class="form-control" readonly></td>  
+		</tr>
+		<tr> 
+			<td>Type:</td><td><input type="text" th:field="*{type}" class="form-control" placeholder="i.e. filter, wiper, brake, oil"></td><td></td><td>MOQ:</td><td><input type="text" th:field="*{inventory.moq}" class="form-control"><p th:if="${#fields.hasErrors('inventory.moq')}" th:errors="*{inventory.moq}"></td> 
+		</tr>
+		<tr> 
+			<td>Category:</td><td><input type="text" th:field="*{category}" class="form-control" placeholder="i.e. Maintenance, Oil, Chemical"><p th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></td><td></td><td>Shelf Location:</td><td><input type="text" th:field="*{inventory.shelfLocation}" class="form-control" placeholder="i.e. m01-01 for Oil Filters">
+			<p th:if="${#fields.hasErrors('inventory.shelfLocation')}" th:errors="*{inventory.shelfLocation}"></td>  
+		</tr>
+		<tr> 
+			<td>SubCategory:</td><td><input type="text" th:field="*{subcategory}" class="form-control" placeholder="Should be a shortform of shelf-location i.e. m-1">
+			<p th:if="${#fields.hasErrors('subcategory')}" th:errors="*{subcategory}"></td><td></td><td>Reorder Level:</td><td><input type="text" th:field="*{inventory.reorderLevel}" class="form-control"><p th:if="${#fields.hasErrors('inventory.reorderLevel')}" th:errors="*{inventory.reorderLevel}"></td>  
+		</tr>
+		<tr>
+			<td>Unit Price:</td><Td><input type="text" th:field="*{inventory.unitPrice}" class="form-control"><p th:if="${#fields.hasErrors('inventory.unitPrice')}" th:errors="*{inventory.unitPrice}"></Td><td></td><td>Retail Price:</td><td><input type="text" th:field="*{inventory.retailPrice}" class="form-control">
+			<p th:if="${#fields.hasErrors('inventory.retailPrice')}" th:errors="*{inventory.retailPrice}"></td> 
+		</tr>
+		<tr th:if="${session.usession.role.toString().equals('ADMIN')}">
+			<td>Wholesale Price:</td><Td><input type="text" th:field="*{inventory.wholesalePrice}" class="form-control">
+			<p th:if="${#fields.hasErrors('inventory.wholesalePrice')}" th:errors="*{inventory.wholesalePrice}"></Td><td></td><td>Partner Price:</td><td><input type="text" th:field="*{inventory.partnerPrice}" class="form-control">
+			<p th:if="${#fields.hasErrors('inventory.partnerPrice')}" th:errors="*{inventory.partnerPrice}"></td> 
+		</tr>
+		<tr><td>Dimension:</td><td><input type="text" th:field="*{dimenision}" class="form-control" placeholder="H * L * W mm"></td><td></td><td></td></tr>
+		<tr th:if="${session.usession.role.toString().equals('ADMIN')}"><td></td><td></td><td><td></td><td></td><td><button type="submit" class="btn btn-success">Save</button></td></tr>
+		<tr><td><a href="javascript:history.back()" class="btn btn-default">Go Back</a></td><td></td><td><td></td><td></td><td></td></tr>
+		</table>
+	</form>
+	<br>
+	<br>
+	</div>
+	<footer th:insert="layout/layout2.html :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,152 @@
+@charset "ISO-8859-1";
+
+body {
+	font-family: "Lato", sans-serif;
+	background-color: #ececec;
+	color: #111;
+}
+
+.sidenav {
+	height: 100%;
+	width: 160px;
+	position: fixed;
+	z-index: 1;
+	top: 50px;
+	left: 0;
+	background-color: rgb(27, 27, 27);
+	overflow-x: hidden;
+	padding-top: 20px;
+}
+
+.sidenav a {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	font-size: 20px;
+	color: #a8a8a8;
+	display: block;
+	transition: 0.3s;
+}
+
+.sidenav a:hover {
+	color: #202020;
+	background-color: #c4c4c4;
+}
+
+.main {
+	margin-left: 160px; /* Same as the width of the sidenav */
+	font-size: 14px; /* Increased text to enable scrolling */
+	padding: 60px 20px;
+	top: 55px;
+}
+
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
+
+.navbar-inverse {
+	margin: auto;
+	background-color: rgb(26, 46, 83);
+}
+
+#footer {
+	text-align: right;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+
+.page-header {
+	text-align: center;
+}
+
+.table-head {
+	padding: 20px;
+	margin: auto;
+	border-spacing: 10px;
+	width: 100%;
+}
+
+.input-group {
+	width: 100%;
+}
+
+.form-header {
+	font-weight: bold;
+}
+
+label {
+	font-weight: normal;
+}
+
+button {
+	right: 10px;
+}
+
+.form-group {
+	width: 60%;
+	margin: auto;
+}
+
+fieldset {
+	padding: 10px;
+}
+
+.table table-striped {
+	width: 80%;
+}
+
+.landing-table {
+	border-spacing: 30px 30px;
+	border-collapse: separate;
+	text-align: center;
+}
+
+.landing-table-cell {
+	padding: 15px;
+	background-color: white;
+	transition: 0.3s;
+	width: 250px;
+}
+
+.landing-table-cell:hover{
+	transform: scale(1.2);
+}
+
+.login-image {
+	opacity: 0.5;
+}
+
+.container-fluid {
+	bottom: 0px;
+}
+
+.error-form {
+	margin: auto;
+	width: 50%;
+	text-align: center;
+}
+
+hr {
+	border-top: 1px solid rgb(177, 177, 177);
+}
+
+
+.login{
+	width: 40%;
+	margin:auto;
+}
+
+.container{
+	width: 40%;
+	margin: auto;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 20px;
+	margin-top: 30vh;
+}

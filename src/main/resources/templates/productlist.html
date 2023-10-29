@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+            rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../static/css/layoutstyle2.css"
+          th:href="@{/css/layoutstyle2.css}"/>
+    <title>Inventory Management System</title>
+</head>
+<body>
+<header th:insert="layout/layout2.html :: header"></header>
+<div th:replace="layout/layout2.html :: menu"></div>
+<div class="main">
+    <form action="" th:object="${product}"
+          th:action="@{/Product/filterlist/1}" method="GET"
+          class="form-inline">
+        <fieldset>
+            Part No:
+            <input type="text" th:field="*{productId}" class="form-control">
+            Name:
+            <input type="text" th:field="*{productName}" class="form-control">
+            Colour: <select name="colour" th:field="*{colour}" class="form-control">
+            <option value="SELECT">SELECT</option>
+            <option th:each="i : ${colours}" th:value="${i}"
+                    th:selected="${i == product.colour}" th:text="${i}"></option>
+        </select> Type: <select name="type" th:field="*{type}" class="form-control">
+            <option value="SELECT">SELECT</option>
+            <option th:each="i : ${types}" th:value="${i}"
+                    th:selected="${i == product.type}" th:text="${i}"></option>
+        </select> Category: <select name="category" th:field="*{category}" class="form-control">
+            <option value="SELECT">SELECT</option>
+            <option th:each="i : ${categories}" th:value="${i}"
+                    th:selected="${i == product.category}" th:text="${i}"></option>
+        </select> Subcategory: <select name="subcategory" th:field="*{subcategory}" class="form-control">
+            <option value="SELECT">SELECT</option>
+            <option th:each="i : ${subcategories}" th:value="${i}"
+                    th:selected="${i == product.subcategory}" th:text="${i}"></option>
+        </select>
+
+            Brand: <select name="brand" th:field="*{brand.brandName}" class="form-control">
+            <option value="SELECT">SELECT</option>
+            <option th:each="i : ${brands}" th:value="${i}"
+                    th:selected="${i == product.brand.brandName}" th:text="${i}"></option>
+        </select>
+            PageSize:<input type="number" th:value="${pageSize}" name="pageSize"
+                            min="10" class="form-control">
+        </fieldset>
+        <button type="submit" class="btn btn-default" style="float: right;">Filter</button>
+        <br/> <br/>
+        <div>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>DESCRIPTION</th>
+                    <th>BRAND NAME</th>
+                    <th>SUPPLIER NAME</th>
+                    <th>QUANTITY</th>
+                    <th th:if="${session.usession.role.toString().equals('ADMIN')}">REORDER REQUIRED</th>
+                    <th>VIEW DETAILS</th>
+                    <th th:if="${session.usession.role.toString().equals('ADMIN')}">DELETE</th>
+                    <th>VIEW HISTORY</th>
+                    <th th:if="${fromTransaction} =='stock'">ADD PRODUCT</th>
+                </tr>
+                <tr th:each="product:${plist}">
+                    <td th:text="${product.productId}">ID</td>
+                    <td th:text="${product.productName}">NAME</td>
+                    <td th:text="${product.description}">DESCRIPTION</td>
+                    <td th:text="${product.brand.brandName}">BRAND NAME</td>
+                    <td th:text="${product.supplier.name}">SUPPLIER NAME</td>
+                    <td th:text="${product.inventory.units}">QUANTITY IN STOCK</td>
+                    <td th:if="${product.inventory.reorderFlag == false and session.usession.role.toString().equals('ADMIN')}"
+                        th:text="Yes">FLAG
+                    </td>
+                    <td th:if="${product.inventory.reorderFlag == true and session.usession.role.toString().equals('ADMIN')}"
+                        th:text="No">FLAG
+                    </td>
+                    <td><a href="EditProduct.html"
+                           th:href="@{/Product/edit/}+${product.productId}"> View </a></td>
+                    <td th:if="${session.usession.role.toString().equals('ADMIN')}"><a href="DeleteProduct.html"
+                                                                                       th:href="@{/Product/delete/}+${product.productId}"
+                                                                                       th:onclick="return confirm('Are you sure that you want to delete this Product?')">
+                        Delete </a></td>
+
+                    <td><a href="ViewHistory.html"
+                           th:href="@{/Product/viewHistory/}+${product.productId}+'/1'">View
+                        History </a></td>
+                    <td><a th:if="${fromTransaction}=='stock'" href=""
+                           th:href="@{/Product/addToStock/}+${product.productId}">Add Product</a></td>
+                </tr>
+            </table>
+        </div>
+        <br>
+
+        <button th:if="${session.usession.role.toString().equals('ADMIN')}" type="submit"
+                th:formaction="@{/Product/productform}" class="btn btn-default">Create New Product
+        </button>
+
+        <br>
+        <br>
+        <div th:if="${totalPages>1 and totalItems>10}">
+            <button th:if="${currentPage > 1}" type="submit"
+                    th:formaction="@{'/Product/'+${source}+'/1'}">First
+            </button>
+            <span th:unless="${currentPage > 1}">First</span>
+            <button th:if="${currentPage > 1}" type="submit"
+                    th:formaction="@{'/Product/'+${source}+'/' + ${currentPage-1}}">Previous
+            </button>
+            <span th:unless="${currentPage > 1}">Previous</span> <span
+                th:each="i: ${#numbers.sequence(1, totalPages)}">
+				<button th:if="${currentPage != i}" type="submit"
+                        th:formaction="@{'/Product/'+${source}+'/' + ${i}}" th:utext="${i}">Page</button>
+				<span th:unless="${currentPage != i}" th:utext="${i}">Page</span>
+				&nbsp;
+			</span>
+            <button th:if="${currentPage < totalPages}" type="submit"
+                    th:formaction="@{'/Product/'+${source}+'/' + ${currentPage+1}}">Next
+            </button>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+            <button th:if="${currentPage < totalPages}" type="submit"
+                    th:formaction="@{'/Product/'+${source}+'/' + ${totalPages}}">Last
+            </button>
+            <span th:unless="${currentPage < totalPages}">Last</span>
+        </div>
+    </form>
+    <br>
+    <br>
+</div>
+<footer th:insert="layout/layout2.html :: footer"></footer>
+</body>
+</html>

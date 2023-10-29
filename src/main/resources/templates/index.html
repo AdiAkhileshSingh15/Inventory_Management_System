@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+            rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../static/css/layoutstyle2.css"
+          th:href="@{/css/layoutstyle2.css}"/>
+    <script>
+        function wrongPass() {
+            alert("Please contact your system administrators to reset your password");
+        }
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-brand"
+               style="color: #f1f1f1; font-family: 'Lobster', cursive; font-size: 20px;">GEARUP GARAGE</p>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div id="login">
+        <form action="" th:object="${user}" th:action="@{/authenticate}" method="post">
+            <h3>Login:</h3>
+            <fieldset>
+                <p>
+                    <input type="text" th:field="*{userName}" class="form-control" placeholder="Username">
+                </p>
+            </fieldset>
+            <fieldset>
+                <p>
+                    <input type="password" th:field="*{password}" class="form-control" placeholder="Password">
+                </p>
+                <p th:if="${wrongCred != null}" th:utext="${wrongCred}"></p>
+            </fieldset>
+            <div>
+								<span
+                                        style="width: 45%; text-align: left; display: inline-block;"><a
+                                        class="small-text" href="#" th:href="@{/static}"
+                                        th:onclick="alert('Please contact your system administrators to reset your password')">Forgot password?</a></span>
+                <span
+                        style="width: 50%; text-align: right; display: inline-block;"><input
+                        type="submit" value="Sign In" class="btn btn-default"></span>
+            </div>
+
+
+        </form>
+    </div>
+
+</div>
+
+<div th:insert="layout/layout.html::footer"></div>
+</body>
+</html>

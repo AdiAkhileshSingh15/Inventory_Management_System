@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Catalogue Page</title>
+</head>
+  <h1>Listing</h1>
+  <table>
+ <tr>
+   <th>ID</th>
+   <th>NAME</th>
+   <th>DESCRIPTION</th>
+   <th>BRAND NAME</th>
+   <th>SUPPLIER NAME</th>
+   <th>QUANTITY IN STOCK</th>
+   <th>EDIT LINK</th>
+   <th>DELETE LINK</th>
+ </tr>
+ <tr th:each="product:${plist}">
+   <td th:text="${product.productId}">ID</td> 
+   <td th:text="${product.productName}">NAME</td>
+   <td th:text="${product.category}">DESCRIPTION</td>
+   <td th:text="${product.description}">BRAND NAME</td>
+   <td th:text="${product.brand.brandName}">SUPPLIER NAME</td>
+   <td th:text="${product.units}">QUANTITY IN STOCK</td>
+	<td><a href="EditProduct.html"
+		th:href="@{/product/edit/}+${product.productId}" th:utext="#{products.page.edit}"> Edit </a></td>
+	      <td><a href="DeleteProduct.html"
+		th:href="@{/product/delete/}+${product.productId}" th:utext="#{products.page.delete}"> Delete </a></td>
+ </tr>
+</table>
+<br>
+<br>
+<br>
+<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    <a th:href="@{'/Product/list/' + ${i-1}}" th:utext="${i}">Page </a>
+    &nbsp;
+</span>
+</body>
+</html>

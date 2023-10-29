@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Update Employee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" media="all" href = "../static/css/layoutStyleSheet.css" th:href="@{/css/layoutStyleSheet.css}"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>Update Employee</title>
+</head>
+<body>
+	<div th.replace="layout/layout.html::header"></div>
+	<div th:replace="layout/layout.html::headerloggedin"></div>
+	<div th:replace="layout/layout.html::menu"></div>
+  <h1>Update Employee</h1>
+  <!-- 1.show all the existing details of the employee
+  		2. only allow some fields to be changed
+  		3. submit -->
+  <form action="" th:object=${user} th:action="@{/user/update}" method ="post">
+	  <table>
+	    <tr><td>UserID</td><td>input type="text" th:field="*{id}">></td></tr>
+	    <tr><td>User</td><td><input type="text" th:field="*{userName}"></td></tr>
+		<tr><td>Name</td><td><input type="text" th:field="*{name}"></td></tr>
+  		<tr><td>Email</td><td><input type="text" th:field="*{email}"></td></tr>
+		<tr><td>Password</td><td><input type="text" th:field="*{password}"></td></tr>
+		<tr><td>Contact</td><td><input type="text" th:field="*{contact}"></td></tr>
+  		<tr></tr>
+		<tr></tr>
+	  	<tr><th>Department</th><th></th></tr>
+  		<tr><td><input type="radio" id="MECHANIC" th:field="*{role}" value="${Role.MECHANIC}"><label for="MECHANIC">Mechanic</label><br></td><td></td></tr>
+		<tr><td></td><td></td></tr>
+		<tr><td><input type="radio" id="ADMIN" th:field="*{role}" value="${Role.ADMIN}"><label for="ADMIN">Admin</label><br></td><td></td></tr>
+		 
+		 <tr><td></td><td align="right"><button type="submit">Log in</button></td></tr>
+		  
+		  
+	  </table>
+ 	</form>
+  	<div th:replace="layout/layout.html::footer"></div>
+</body>
+</html>

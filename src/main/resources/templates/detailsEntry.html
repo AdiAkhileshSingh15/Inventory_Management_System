@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutstyle2.css"
+	th:href="@{/css/layoutstyle2.css}" />
+<title>Inventory Management System</title>
+</head>
+<body>
+	<header th:insert="layout/layout2.html::header"></header>
+	<div th:insert="layout/layout2.html::menu"></div>
+	<div class="main">
+	<h3>
+		Product Inventory Transactions
+	</h3>
+	<hr>
+	<form action="" th:object="${detail}"
+		th:action="@{/stockentry/addtransactiondetails/save}" method="post">
+		<div class="form-group">
+			<fieldset>
+				<input type="hidden" th:field="*{Trans_Detail_Id}">
+			</fieldset>
+			<fieldset>
+				<input type="hidden" th:field="*{transaction}">
+			</fieldset>
+			<fieldset>
+				<input type="hidden" th:field="${detail.product.productId}" class="form-control">
+				<p th:utext="${'Product: '+detail.product.productId+' '+detail.product.productName}"></p>
+				
+			</fieldset>
+			<fieldset th:if="${transactiontype == T(sg.edu.iss.CA.model.TransactionType).PO}">
+				Quantity: <input type="number" th:field="*{quantity}"
+					class="form-control" min="1">
+			</fieldset>
+			<fieldset th:unless="${transactiontype == T(sg.edu.iss.CA.model.TransactionType).PO}">
+				Quantity: <input type="number" th:field="*{quantity}"
+					class="form-control" max="-1">
+					<p th:if="${error}!=null" th:utext="${error}"></p>
+			</fieldset>
+			<fieldset>
+				<button type="submit" class="btn btn-success" style="float:right;">Save</button>
+				<a href="javascript:history.back()" class="btn btn-default">Go Back</a>
+			</fieldset>
+		</div>
+	</form>
+	<br>
+	<br>
+	</div>
+	<footer th:insert="layout/layout2.html::footer"></footer>
+</body>
+</html>

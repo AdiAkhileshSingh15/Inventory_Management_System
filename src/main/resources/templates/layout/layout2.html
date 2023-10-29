@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutstyle2.css"
+	th:href="@{/css/layoutstyle2.css}" />
+<title>Inventory Management System</title>
+</head>
+<body>
+	<div th:fragment="header" id="header">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#" th:href="@{/welcome}"
+						style="color: #f1f1f1; font-family: 'Lobster', cursive; font-size: 20px;">SA
+						AUTOMOBILES</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li><input type="hidden" th:value="${session.usession.role}"></li>
+					<li><a href="#"
+						th:href="@{/user/resetpw/}+${session.usession.userID}"><span
+							class="glyphicon glyphicon-user" style="color: #f1f1f1;"></span>
+							<span th:utext="${session.usession.userName}">User</span></a></li>
+					<li th:if="${!session.usession.userName.isEmpty()}"><a
+						href="#" th:href="@{/logout}"><span
+							class="glyphicon glyphicon-log-in" style="color: #f1f1f1;"></span>
+							Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div th:fragment="menu" id="menu">
+		<div class="sidenav">
+			<a href="#about" th:href="@{/welcome}">Home</a> <a href="#services" th:href="@{/Product/list/1}">Product</a> <a
+				href="#clients" th:href="@{/stockentry/}">Transaction</a> <a th:if="${session.usession.role.toString().equals('ADMIN')}" href="#contact" th:href="@{/user/list/1}">Employees</a> 
+				<a th:if="${session.usession.role.toString().equals('ADMIN')}" th:href="@{/Supplier/supplierlist/1}"
+				href="#contact" >Suppliers</a> <a href="#contact" th:href="@{/Customer/customerlist/1}">Customers</a>
+		</div>
+	</div>
+	<div class="container-fluid" th:fragment="footer" id="footer">
+		<div class="container-fluid" th:fragment="footer" id="footer">
+			<small>Now is: <b th:text="${execInfo.now.time}"></b></small> <br>
+			<small>Inventory Management System, ISS, NUS 2020</small>
+		</div>
+	</div>
+</body>
+</html>

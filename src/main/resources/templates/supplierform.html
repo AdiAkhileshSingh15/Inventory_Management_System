@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutstyle2.css"
+	th:href="@{/css/layoutstyle2.css}" />
+<title>Inventory Management System</title>
+</head>
+<body>
+<header th:insert="layout/layout2.html :: header"></header>
+	<div th:replace="layout/layout2.html :: menu"></div>
+	<div class="main">
+	<h3>Supplier Form</h3>
+	<hr>
+	<form action="" th:object="${supplier}" th:action="@{/Supplier/save}"
+		method="POST">
+		<div class="form-group">
+		<fieldset>
+			<input type="hidden"
+				th:field="*{supplierId}" />
+		</fieldset>
+		<fieldset>
+			Supplier Name: <input type="text" th:field="*{name}" class="form-control">
+			<p th:if ="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+		</fieldset>
+		<fieldset>
+			Supplier Address: <input type="text" th:field="*{address}" class="form-control">
+			<p th:if ="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+		</fieldset>
+		<fieldset>
+			Supplier Phone: <input type="text" th:field="*{phone}" class="form-control">
+			<p th:if ="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+		</fieldset>
+		<fieldset> 
+			Supplier Email: <input type="email" th:field="*{email}" class="form-control">
+			<p th:if ="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+		</fieldset>	
+		<fieldset>
+			<button type="submit" class="btn btn-success" style="float:right;">Save</button>
+			<a href="javascript:history.back()" class="btn btn-default">Go Back</a>
+		</fieldset>
+		</div>
+	</form>
+	<br>
+	<br>
+	</div>
+	<footer th:insert="layout/layout2.html :: footer"></footer>
+</body>
+</html>

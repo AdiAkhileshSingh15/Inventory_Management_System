@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutstyle2.css"
+	th:href="@{/css/layoutstyle2.css}" />
+<title>Inventory Management System</title>
+</head>
+<body>
+	<header th:insert="layout/layout2.html::header"></header>
+	<div th:insert="layout/layout2.html::menu"></div>
+	<div class="main">
+	<h3>Customer List</h3>
+	<hr>
+	<form action=""
+		th:action="@{'/Customer/customerlist/1'}"
+		method="GET" class="form-inline">
+		<table class="table table-striped">
+			<tr>
+				<th>CUSTOMER ID</th>
+				<th>CUSTOMER NAME</th>
+				<th>VEHICLE NUMBER</th>
+				<th>EMAIL</th>
+				<th>PHONE NUMBER</th>
+				<th>EDIT RECORD</th>
+				<th>DELETE RECORD</th>
+			</tr>
+			<tr th:each="Customer:${cslice}">
+				<td th:text="${Customer.customerID}">CUSTOMER ID</td>
+				<td th:text="${Customer.customerName}">CUSTOMER NAME</td>
+				<td th:text="${Customer.vehicle}">VEHICLE NUMBER</td>
+				<td th:text="${Customer.email}">EMAIL</td>
+				<td th:text="${Customer.contactno}">PHONE NUMBER</td>
+				<td><a href="EditCustomer.html"
+					th:href="@{/Customer/edit/}+${Customer.customerID}"
+					th:utext="#{Customer.page.edit}">EDIT</a></td>
+				<td><a href="DeleteCustomer.html"
+					th:href="@{/Customer/delete/}+${Customer.customerID}"
+					th:utext="#{Customer.page.delete}" th:onclick="return confirm('Are you sure that you want to delete this customer?')">DELETE</a></td>
+			</tr>
+		</table>
+
+		<a href="" th:href="@{/Customer/customerform}" class="btn btn-default">Add
+			new Customer</a> <br> <br> <br>
+		<div th:if="${totalPages>1}">
+			<button th:if="${currentPage > 1}" type="submit"
+				th:formaction="@{'/Customer/customerlist/'+'/1'}">First</button>
+			<span th:unless="${currentPage > 1}">First</span>
+			<button th:if="${currentPage > 1}" type="submit"
+				th:formaction="@{'/Customer/customerlist/' + ${currentPage-1}}">Previous</button>
+			<span th:unless="${currentPage > 1}">Previous</span> <span
+				th:each="i: ${#numbers.sequence(1, totalPages)}">
+				<button th:if="${currentPage != i}" type="submit"
+					th:formaction="@{'/Customer/customerlist/' + ${i}}"
+					th:utext="${i}">Page</button> <span th:unless="${currentPage != i}"
+				th:utext="${i}">Page</span> &nbsp;
+			</span>
+			<button th:if="${currentPage < totalPages}" type="submit"
+				th:formaction="@{'/Customer/customerlist/' + ${currentPage+1}}">Next</button>
+			<span th:unless="${currentPage < totalPages}">Next</span>
+			<button th:if="${currentPage < totalPages}" type="submit"
+				th:formaction="@{'/Customer/customerlist/' + ${totalPages}}">Last</button>
+			<span th:unless="${currentPage < totalPages}">Last</span>
+		</div>
+	</form>
+	<br>
+	<br>
+	</div>
+	<footer th:insert="layout/layout2.html::footer"></footer>
+</body>
+</html>

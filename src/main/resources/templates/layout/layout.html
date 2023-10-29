@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Inventory Management System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/layoutStyleSheet.css"
+	th:href="@{/css/layoutStyleSheet.css}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div th:fragment="header" id="header">
+		<table class="table-head">
+			<tr>
+				<td colspan=4>
+					<div class="page-header">
+					<img
+					src="https://i.imgur.com/IKRjKeH.jpg"
+					/>
+					</div></td>
+			</tr>
+		</table>
+	</div>
+	<div th:fragment="headerloggedin" id="headerloggedin">
+		<table class="table-head">
+			<tr>
+				<td>Welcome,<a href="#"
+					 th:href="@{/user/resetpw/}+${session.usession.userID}"><span href="#"
+					th:utext="${session.usession.userName}">User</span></a>
+				</td> 
+				<td colspan=2>
+					<!--<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search">
+						<span class="input-group-btn">
+						
+						
+							<button class="btn btn-default" type="button">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>  -->
+				</td>
+				<td align="right" th:if="${!session.usession.userName.isEmpty()}"><a href="#" th:href="@{/logout}">Logout</a></td>
+				<td align="right" th:if="${session.usession.userName.isEmpty()}"><a href="#" th:href="@{/}">index</a></td>
+			</tr>
+			<tr><td>Role:<a href="#"
+					th:utext="${session.usession.role}">User</a></td>
+		</table>
+	</div>
+	<div th:fragment="menu" id="menu">
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#" th:href="@{/welcome}">Home</a></li>
+					<li ><a href="#" th:href="@{/Product/list/1}">Products</a></li>
+					<li ><a href="#" th:href="@{/stockentry/}">Transactions</a></li>
+					<li ><a href="#" th:href="@{/Customer/customerlist/1}">Customers</a></li>
+					<li th:if="${session.usession.role.toString().equals('ADMIN')}"><a href="#" th:href="@{/user/list/1}">Employee Portal</a></li>
+					<li th:if="${session.usession.role.toString().equals('ADMIN')}"><a href="#" th:href="@{/Supplier/supplierlist/1}">Supplier</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div th:fragment="main" id="main">
+		<div class="container-fluid">
+			<div class="row content">
+				<div class="col-sm-3 sidenav">
+					<h4 class="form-header">Product Search</h4>
+					<form action="" th:object="${product}"
+						th:action="@{/product/search}" method="post">
+						<ul class="nav nav-pills nav-stacked">
+							<li><h5 class="form-header">Part Number</h5></li>
+							<li>
+								<fieldset>
+									<input type="text" th:field="*{brand}" class=form-control>
+								</fieldset>
+							</li>
+							<li><h5 class="form-header">Category</h5></li>
+							<li th:each="i : ${products}">
+								<fieldset>
+									<input type="radio" th:field="${i.category}"
+										th:value="${i.category}"> <label
+										th:for="${i.category}" th:text="${i.category}"></label> <br>
+								</fieldset>
+							</li>
+							<li><h5 class="form-header">Supplier</h5></li>
+							<li>
+								<fieldset>
+									<select id="supplier" name="supplier" th:field="*{supplier}">
+										<option th:each="i : ${products}" th:value="${i.supplierId}"
+											th:text="${i.supplierName}"></option>
+									</select>
+								</fieldset>
+							</li>
+							<li><h5 class="form-header">Description</h5></li>
+							<li>
+								<fieldset>
+									<input type="text" th:field="*{description}" class=form-control>
+								</fieldset>
+							</li>
+							<li><br>
+								<fieldset>
+									<button type="submit" class="btn btn-default">
+										<span>Filter</span>
+									</button>
+								</fieldset></li>
+						</ul>
+					</form>
+					<br>
+				</div>
+			</div>
+
+			<div class="col-sm-9">
+				<h4>
+					<small>**Page Title**</small>
+				</h4>
+				<hr>
+
+			</div>
+		</div>
+	</div>
+	<br>
+
+
+	<div class="container-fluid" th:fragment="footer" id="footer">
+		<small>Now is: <b th:text="${execInfo.now.time}"></b></small> <br>
+		<small>Inventory Management System, ISS, NUS 2020</small>
+	</div>
+
+</body>
+</html>
